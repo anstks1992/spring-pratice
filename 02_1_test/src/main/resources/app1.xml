@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+<bean id="login1" class="Sample1.Login1"></bean>
+<bean id="order1" class="Sample1.OrderImpl1"></bean>
+<bean id="dao1" class="Sample1.Dao1"></bean>
+<bean id="logout1" class="Sample1.Logout1"></bean>
+<bean id="hello1" class="Sample1.Hello1"></bean>
+<bean id="board1" class="Sample1.BoardImpl1"></bean>
+
+<aop:config>
+<aop:aspect ref="login1" order="1">
+<aop:before method="login1" pointcut="execution(* Sample1.OrderImpl1.*())"/>
+</aop:aspect>
+</aop:config>
+
+<aop:config>
+ <aop:aspect ref="hello1" order="2">
+    <aop:before method="hello1" pointcut="execution(* Sample1.OrderImpl1.*())"/>
+ </aop:aspect>
+</aop:config>
+
+<aop:config>
+<aop:aspect ref="dao1" order="2">
+<aop:after method="dao1" pointcut="execution(* Sample1.OrderImpl1.*())"/>
+</aop:aspect>
+</aop:config>
+
+<aop:config>
+<aop:aspect ref="logout1" order="1">
+<aop:after method="logout1" pointcut="execution(* Sample1.OrderImpl1.*())"/>
+</aop:aspect>
+</aop:config>
+
+
+
+
+<aop:config>
+<aop:aspect ref="login1" order="1">
+<aop:before method="login1" pointcut="execution(* Sample1.BoardImpl1.*())"/>
+</aop:aspect>
+</aop:config>
+
+<aop:config>
+<aop:aspect ref="dao1" order="2">
+<aop:before method="dao1" pointcut="execution(* Sample1.BoardImpl1.*())"/>
+</aop:aspect>
+</aop:config>
+
+<aop:config>
+<aop:aspect ref="logout1" order="1">
+<aop:after method="logout1" pointcut="execution(* Sample1.BoardImpl1.*())"/>
+</aop:aspect>
+</aop:config>
+
+
+
+
+</beans>
