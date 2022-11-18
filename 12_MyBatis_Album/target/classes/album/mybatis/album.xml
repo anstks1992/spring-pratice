@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- album.xml -->
+
+<mapper namespace="album.AlbumBean" > <!--namespace값과 AlbumBean하고는 전혀 상관이없다 = album.xyz라고 해도됨 -->
+<select id="GetTotalCount" resultType="int" parameterType="hashmap"> <!-- parameterType은 안써도 상관없다 -->
+        select count(*) from albums   <!-- 세미콜론은 쓰면 안됨  -->
+                                      <!-- select는 resultType을 반드시 써줘야 한다 그 외는 쓰면 안됨  -->
+        <!-- 동적 쿼리  -->
+        <if test="whatColumn=='title'">
+           where title like #{keyword}
+        </if>
+        
+        <if test="whatColumn=='singer'">
+            where singer like #{keyword}
+        </if>
+</select>
+
+<select id="GetAlbumList" resultType="MyAlbum"> <!-- myalbum = albumbean  -->
+  select * from albums
+  <if test="whatColumn=='title'">
+           where title like #{keyword}
+        </if>
+        
+        <if test="whatColumn=='singer'">
+            where singer like #{keyword}
+        </if> 
+   order by num
+</select>
+
+<!-- albumbean 객체가 넘어옴  -->
+<insert id="InsertAlbum" > <!-- insert 작업이 끝나면 자동으로 성공적으로 삽입된 개수가 리턴된다  -->
+   insert into albums(num,title,singer,price)
+   values(albums_seq.nextval,#{title},#{singer},#{price})
+   <!-- 각각의 getter메서드가 호출된다  -->
+</insert>
+
+<delete id="DeleteAlbum" >
+   delete from albums where num=#{num}
+</delete>
+
+<select id="GetAlbum" resultType="MyAlbum">
+  select * from albums where num=#{num}
+ </select>
+ 
+ <update id="UpdateAlbum">
+   update albums set title=#{title},singer=#{singer},price=#{price},day=#{day} where num=#{num}
+ </update>
+
+
+</mapper>
