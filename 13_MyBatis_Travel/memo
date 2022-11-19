@@ -1,0 +1,41 @@
+drop table travel;
+create table travel(
+	num number primary key,
+	name varchar2(10),
+	age number,
+	area varchar2(30),
+	style varchar2(15),
+	price varchar2(10)
+);
+
+drop sequence travel_seq;
+--create sequence travel_seq nocache;
+create sequence travel_seq 
+minvalue 1
+start with 1
+nocache;
+
+
+insert into travel
+values(travel_seq.nextval, '수지',21, '동남아','패키지','200~300');
+
+commit;
+
+col num for 99
+col age for 999
+col name for a6
+col area for a25
+col style for a10
+col price for a10
+select * from travel;
+
+1.pom.xml 
+oracle,datasource,mybatis,유효성검사
+
+2.web.xml
+
+3.root-context
+bean 3개 작성
+xml 2개 생성 - DOCTYPE 설정 , mapper 태그설정,configuration 설정
+
+4.travle-servlet.xml
